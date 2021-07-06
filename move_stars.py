@@ -10,13 +10,13 @@ SCREEN_HEIGHT = 1080
 
 
 class Star:
-    def __init__(self, numer=0, screen_width=1200, screen_height=400):
+    def __init__(self, number=0, screen_width=1200, screen_height=400):
         self.color = (randint(0, 255),
                       randint(0, 255),
                       randint(0, 255))
-        self.massa = randint(1, 1000)
-        self.radius = int((self.massa / pi) ** 0.5)
-        self.num = numer
+        self.mass = randint(1, 1000)
+        self.radius = int((self.mass / pi) ** 0.5)
+        self.number = number
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.x = randint(1, screen_width)
@@ -30,11 +30,10 @@ class Star:
         k = 10
         for other in others:
             if self != other:
-                square_distance = (self.x - other.x)**2 + (self.y - other.y)**2;
-                # Max(0.0000001, RKvadrat);
-                acceleration = k * other.massa / square_distance;
-                acceleration_x += acceleration * (other.x - self.x) / square_distance**0.5;
-                acceleration_y += acceleration * (other.y - self.y) / square_distance ** 0.5;
+                square_distance = (self.x - other.x)**2 + (self.y - other.y)**2
+                acceleration = k * other.mass / square_distance
+                acceleration_x += acceleration * (other.x - self.x) / square_distance**0.5
+                acceleration_y += acceleration * (other.y - self.y) / square_distance ** 0.5
         self.vx += acceleration_x
         self.vy += acceleration_y
 
@@ -52,12 +51,12 @@ class Star:
             self.vy = -abs(self.vy)
 
     def __add__(self, other):
-        impulse_x = self.vx * self.massa + other.vx * other.massa
-        impulse_y = self.vy * self.massa + other.vy * other.massa
-        self.massa += other.massa
-        self.radius = int((self.massa / pi) ** 0.5)
-        self.vx = impulse_x / self.massa
-        self.vy = impulse_y / self.massa
+        impulse_x = self.vx * self.mass + other.vx * other.mass
+        impulse_y = self.vy * self.mass + other.vy * other.mass
+        self.mass += other.mass
+        self.radius = int((self.mass / pi) ** 0.5)
+        self.vx = impulse_x / self.mass
+        self.vy = impulse_y / self.mass
         return self
 
     def star_collisions(self, others):
@@ -69,13 +68,12 @@ class Star:
                     others.remove(other)
                     print(len(others))
 
-
     def update(self):
         self.color = (randint(0, 255),
                       randint(0, 255),
                       randint(0, 255))
-        self.massa = randint(1, 1000)
-        self.radius = int((self.massa / pi) ** 0.5)
+        self.mass = randint(1, 1000)
+        self.radius = int((self.mass / pi) ** 0.5)
         self.x = randint(1, self.screen_width)
         self.y = randint(1, self.screen_height)
 
@@ -83,8 +81,8 @@ class Star:
         pygame.draw.circle(screen, self.color, (self.x, self.y), self.radius)
 
     def __str__(self):
-        s = '==   ' + str(self.num) + '\r\n'
-        s += 'Massa = ' + str(self.massa) + '\r\n' + 'Radius = ' + str(self.radius) + '\r\n'
+        s = '==   ' + str(self.number) + '\r\n'
+        s += 'Mass = ' + str(self.mass) + '\r\n' + 'Radius = ' + str(self.radius) + '\r\n'
         return s
 
 
