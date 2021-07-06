@@ -5,8 +5,8 @@ import sys
 import pygame
 
 MAX_SPEED = 0.5
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 800
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
 
 
 class Star:
@@ -88,10 +88,8 @@ class Star:
         return s
 
 
-stars = [Star(n, SCREEN_WIDTH, SCREEN_HEIGHT) for n in range(10)]
-
-
 def run_game():
+    stars = [Star(n, SCREEN_WIDTH, SCREEN_HEIGHT) for n in range(10)]
     # Инициализирует игру и создает объект экрана.
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -113,6 +111,10 @@ def run_game():
             star.star_move(stars)
             star.star_collisions(stars)
             star.star_paint(screen)
+
+        if len(stars) <= 1:
+            stars.clear()
+            stars = [Star(n, SCREEN_WIDTH, SCREEN_HEIGHT) for n in range(10)]
 
         # Отображение последнего прорисованного экрана.
         pygame.display.flip()
